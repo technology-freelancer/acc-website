@@ -173,6 +173,30 @@ export const dataByLanguage = {
         message: 'The weekly practice made difficult chapters feel manageable.'
       }
     ],
+    alumni: [
+      {
+        id: 'al1',
+        studentName: 'Shreya Joshi',
+        batch: "Shakil Kazi Sir's English Class",
+        year: '2025',
+        currentStatus: 'HSC English achiever',
+        achievement: '93/100 in English',
+        message: 'Regular writing practice and simple grammar guidance helped me score with confidence.',
+        photoUrl: asset('image-12'),
+        status: 'active'
+      },
+      {
+        id: 'al2',
+        studentName: 'Hrishikesh Hazare',
+        batch: 'Animate Coaching Classes',
+        year: '2024',
+        currentStatus: 'Class 10 board achiever',
+        achievement: '99% in Maths',
+        message: 'Weekly tests and focused revision made difficult chapters easier to handle.',
+        photoUrl: asset('image-33'),
+        status: 'active'
+      }
+    ],
     announcements: [
       {
         id: 'a1',
@@ -334,6 +358,30 @@ export const dataByLanguage = {
         message: 'साप्ताहिक सरावामुळे कठीण धडेही सोपे वाटू लागले.'
       }
     ],
+    alumni: [
+      {
+        id: 'al1',
+        studentName: 'श्रेया जोशी',
+        batch: 'शकील काजी सर इंग्लिश क्लास',
+        year: '2025',
+        currentStatus: 'HSC इंग्रजी यशस्वी विद्यार्थी',
+        achievement: 'इंग्रजीत 93/100',
+        message: 'नियमित लेखन सराव आणि सोप्या व्याकरण मार्गदर्शनामुळे आत्मविश्वासाने गुण मिळवता आले.',
+        photoUrl: asset('image-12'),
+        status: 'active'
+      },
+      {
+        id: 'al2',
+        studentName: 'हृषिकेश हजारे',
+        batch: 'ॲनिमेट कोचिंग क्लासेस',
+        year: '2024',
+        currentStatus: 'इयत्ता १०वी बोर्ड यशस्वी विद्यार्थी',
+        achievement: 'गणितात 99%',
+        message: 'साप्ताहिक टेस्ट आणि केंद्रित रिव्हिजनमुळे कठीण धडे सोपे झाले.',
+        photoUrl: asset('image-33'),
+        status: 'active'
+      }
+    ],
     announcements: [
       {
         id: 'a1',
@@ -451,5 +499,6 @@ export const {
   courses,
   highlights,
   testimonials,
+  alumni,
   announcements
 } = dataByLanguage.en;

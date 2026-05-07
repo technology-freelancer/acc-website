@@ -10,7 +10,7 @@ export default function Footer() {
       summary: 'English, Maths and Science coaching for focused students in Parbhani.',
       explore: 'Explore',
       contact: 'Contact',
-      links: ['Courses', 'Gallery', 'Results', 'Toppers', 'Testimonials'],
+      links: ['Courses', 'Alumni', 'Gallery', 'Results', 'Toppers', 'Testimonials'],
       rights: 'All rights reserved.',
       builtBy: 'Website built by'
     },
@@ -18,17 +18,18 @@ export default function Footer() {
       summary: 'परभणीतील विद्यार्थ्यांसाठी इंग्रजी, गणित आणि विज्ञान कोचिंग.',
       explore: 'पहा',
       contact: 'संपर्क',
-      links: ['कोर्सेस', 'गॅलरी', 'निकाल', 'टॉपर्स', 'अभिप्राय'],
+      links: ['कोर्सेस', 'Alumni', 'गॅलरी', 'निकाल', 'टॉपर्स', 'अभिप्राय'],
       rights: 'सर्व हक्क राखीव.',
       builtBy: 'वेबसाइट तयार केली'
     }
   }[language];
   const footerLinks = [
     ['/courses', text.links[0]],
-    ['/gallery', text.links[1]],
-    ['/results', text.links[2]],
-    ['/toppers', text.links[3]],
-    ['/testimonials', text.links[4]]
+    ['/alumni', text.links[1]],
+    ['/gallery', text.links[2]],
+    ['/results', text.links[3]],
+    ['/toppers', text.links[4]],
+    ['/testimonials', text.links[5]]
   ];
 
   return (

@@ -7,6 +7,7 @@ const links = [
   ['/', { en: 'Home', mr: 'होम' }],
   ['/about', { en: 'About', mr: 'माहिती' }],
   ['/courses', { en: 'Courses', mr: 'कोर्सेस' }],
+  ['/alumni', { en: 'Alumni', mr: 'Alumni' }],
   ['/gallery', { en: 'Gallery', mr: 'गॅलरी' }],
   ['/results', { en: 'Results', mr: 'निकाल' }],
   ['/toppers', { en: 'Toppers', mr: 'टॉपर्स' }],

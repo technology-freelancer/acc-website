@@ -124,9 +124,11 @@ export const mockCourses = [
 
 const fallbackByAction = {
   getResults: [],
+  getAlumni: [],
   getTestimonials: [],
   getAnnouncements: [],
-  getCourses: []
+  getCourses: [],
+  getGallery: []
 };
 
 const normalizeResponse = (response, action) => {
