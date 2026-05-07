@@ -11,7 +11,7 @@ import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 export default function Home() {
   const { language } = useLanguage();
-  const { brand, courses, galleryImages, highlights } = getSiteData(language);
+  const { announcements, brand, courses, galleryImages, highlights } = getSiteData(language);
   const [sheetData, setSheetData] = useState(() => ({
     results: getCachedSheetData('getResults'),
     testimonials: getCachedSheetData('getTestimonials'),
@@ -104,7 +104,7 @@ export default function Home() {
   }, []);
 
   const displayTestimonials = sheetData.testimonials;
-  const displayAnnouncements = sheetData.announcements;
+  const displayAnnouncements = sheetData.announcements.length ? sheetData.announcements : announcements;
   const topResults = [...sheetData.results].sort((a, b) => Number(a.rank) - Number(b.rank)).slice(0, 3);
 
   return (

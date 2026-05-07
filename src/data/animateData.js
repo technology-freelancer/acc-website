@@ -146,7 +146,15 @@ export const dataByLanguage = {
     ],
     testimonials: [],
     alumni: [],
-    announcements: []
+    announcements: [
+      {
+        id: 'admissions-open',
+        type: 'Admissions',
+        date: 'Open now',
+        title: 'Admissions are open',
+        description: 'Admissions are open for Classes 5th to 10th, 11th-12th English and 11th-12th Maths.'
+      }
+    ]
   },
   mr: {
     brand: {
@@ -258,7 +266,15 @@ export const dataByLanguage = {
     ],
     testimonials: [],
     alumni: [],
-    announcements: []
+    announcements: [
+      {
+        id: 'admissions-open',
+        type: 'प्रवेश',
+        date: 'सुरू आहेत',
+        title: 'नवीन प्रवेश सुरू',
+        description: 'इयत्ता ५वी ते १०वी, ११वी-१२वी इंग्रजी आणि ११वी-१२वी गणितासाठी प्रवेश सुरू आहेत.'
+      }
+    ]
   }
 };
 
