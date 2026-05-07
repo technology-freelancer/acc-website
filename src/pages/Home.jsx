@@ -1,19 +1,23 @@
-import { useEffect, useState } from 'react';
+import { Children, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchSheetData } from '../api/googleSheetApi.js';
+import { fetchSheetData, getCachedSheetData } from '../api/googleSheetApi.js';
 import Hero from '../components/Hero.jsx';
 import ResultCard from '../components/ResultCard.jsx';
 import TopperCard from '../components/TopperCard.jsx';
 import TestimonialCard from '../components/TestimonialCard.jsx';
 import AnnouncementCard from '../components/AnnouncementCard.jsx';
-import { getSiteData, results } from '../data/animateData.js';
+import { getSiteData } from '../data/animateData.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 export default function Home() {
   const { language } = useLanguage();
-  const { announcements, brand, courses, galleryImages, highlights, testimonials } = getSiteData(language);
-  const [sheetData, setSheetData] = useState({ results, testimonials: [], announcements: [] });
-  const [loading, setLoading] = useState(true);
+  const { brand, courses, galleryImages, highlights } = getSiteData(language);
+  const [sheetData, setSheetData] = useState(() => ({
+    results: getCachedSheetData('getResults'),
+    testimonials: getCachedSheetData('getTestimonials'),
+    announcements: getCachedSheetData('getAnnouncements')
+  }));
+  const [loading, setLoading] = useState(false);
   const text = {
     en: {
       storyEyebrow: 'Real classroom moments',
@@ -41,6 +45,9 @@ export default function Home() {
       viewAll: 'View all',
       galleryCta: 'Full Gallery',
       loading: 'Loading latest data...',
+      emptyResults: 'New results will appear here soon.',
+      emptyTestimonials: 'Testimonials will appear here soon.',
+      emptyAnnouncements: 'Announcements will appear here soon.',
       ctaTitle: 'Admissions are open at Animate Coaching Classes.',
       whatsapp: 'WhatsApp Now',
       visit: 'Visit Centres'
@@ -71,6 +78,9 @@ export default function Home() {
       viewAll: 'सर्व पहा',
       galleryCta: 'पूर्ण गॅलरी',
       loading: 'नवीन माहिती लोड होत आहे...',
+      emptyResults: 'नवीन निकाल लवकरच येथे दिसतील.',
+      emptyTestimonials: 'अभिप्राय लवकरच येथे दिसतील.',
+      emptyAnnouncements: 'सूचना लवकरच येथे दिसतील.',
       ctaTitle: 'ॲनिमेट कोचिंग क्लासेसमध्ये प्रवेश सुरू आहेत.',
       whatsapp: 'WhatsApp करा',
       visit: 'सेंटरला भेट द्या'
@@ -85,7 +95,7 @@ export default function Home() {
     ])
       .then(([sheetResults, sheetTestimonials, sheetAnnouncements]) => {
         setSheetData({
-          results: sheetResults.length ? sheetResults : results,
+          results: sheetResults,
           testimonials: sheetTestimonials,
           announcements: sheetAnnouncements
         });
@@ -93,8 +103,8 @@ export default function Home() {
       .finally(() => setLoading(false));
   }, []);
 
-  const displayTestimonials = sheetData.testimonials.length ? sheetData.testimonials : testimonials;
-  const displayAnnouncements = sheetData.announcements.length ? sheetData.announcements : announcements;
+  const displayTestimonials = sheetData.testimonials;
+  const displayAnnouncements = sheetData.announcements;
   const topResults = [...sheetData.results].sort((a, b) => Number(a.rank) - Number(b.rank)).slice(0, 3);
 
   return (
@@ -178,7 +188,7 @@ export default function Home() {
         ))}
       </HomeSection>
 
-      <HomeSection eyebrow={text.resultsEyebrow} title={text.resultsTitle} link="/results" loading={loading} loadingText={text.loading} viewAll={text.viewAll}>
+      <HomeSection eyebrow={text.resultsEyebrow} title={text.resultsTitle} link="/results" loading={loading} loadingText={text.loading} emptyText={text.emptyResults} viewAll={text.viewAll}>
         {sheetData.results.slice(0, 3).map((result) => (
           <div className="col-md-6 col-xl-4" key={result.id}>
             <ResultCard result={result} />
@@ -186,7 +196,7 @@ export default function Home() {
         ))}
       </HomeSection>
 
-      <HomeSection eyebrow={text.toppersEyebrow} title={text.toppersTitle} link="/toppers" alt loading={loading} loadingText={text.loading} viewAll={text.viewAll}>
+      <HomeSection eyebrow={text.toppersEyebrow} title={text.toppersTitle} link="/toppers" alt loading={loading} loadingText={text.loading} emptyText={text.emptyResults} viewAll={text.viewAll}>
         {topResults.map((topper) => (
           <div className="col-md-6 col-xl-4" key={topper.id}>
             <TopperCard topper={topper} />
@@ -194,7 +204,7 @@ export default function Home() {
         ))}
       </HomeSection>
 
-      <HomeSection eyebrow={text.testimonialsEyebrow} title={text.testimonialsTitle} link="/testimonials" loading={loading} loadingText={text.loading} viewAll={text.viewAll}>
+      <HomeSection eyebrow={text.testimonialsEyebrow} title={text.testimonialsTitle} link="/testimonials" loading={loading} loadingText={text.loading} emptyText={text.emptyTestimonials} viewAll={text.viewAll}>
         {displayTestimonials.slice(0, 3).map((testimonial) => (
           <div className="col-md-6 col-xl-4" key={testimonial.id}>
             <TestimonialCard testimonial={testimonial} />
@@ -202,7 +212,7 @@ export default function Home() {
         ))}
       </HomeSection>
 
-      <HomeSection eyebrow={text.admissionsEyebrow} title={text.admissionsTitle} loading={loading} loadingText={text.loading}>
+      <HomeSection eyebrow={text.admissionsEyebrow} title={text.admissionsTitle} loading={loading} loadingText={text.loading} emptyText={text.emptyAnnouncements}>
         {displayAnnouncements.slice(0, 3).map((announcement) => (
           <div className="col-md-6 col-xl-4" key={announcement.id}>
             <AnnouncementCard announcement={announcement} />
@@ -228,7 +238,8 @@ export default function Home() {
   );
 }
 
-function HomeSection({ eyebrow = 'Animate updates', title, link, children, loading, loadingText = 'Loading latest data...', alt, viewAll = 'View all' }) {
+function HomeSection({ eyebrow = 'Animate updates', title, link, children, loading, loadingText = 'Loading latest data...', emptyText, alt, viewAll = 'View all' }) {
+  const hasChildren = Children.count(children) > 0;
   return (
     <section className={`section-padding ${alt ? 'section-muted' : ''}`}>
       <div className="container">
@@ -239,7 +250,7 @@ function HomeSection({ eyebrow = 'Animate updates', title, link, children, loadi
           </div>
           {link && <Link className="btn btn-outline-primary" to={link}>{viewAll}</Link>}
         </div>
-        {loading ? <p className="text-muted">{loadingText}</p> : <div className="row g-4">{children}</div>}
+        {loading && !hasChildren ? <p className="text-muted">{loadingText}</p> : hasChildren ? <div className="row g-4">{children}</div> : <div className="empty-state">{emptyText}</div>}
       </div>
     </section>
   );

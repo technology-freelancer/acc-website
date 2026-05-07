@@ -1253,6 +1253,64 @@ a {
   object-position: top center;
 }
 
+.weekly-results-panel {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 1.8rem 0;
+  padding: 1.2rem;
+}
+
+.weekly-result-group {
+  border-top: 1px solid var(--border);
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+}
+
+.weekly-result-group h3 {
+  color: var(--primary);
+  font-size: 1.15rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+.weekly-result-card {
+  background:
+    linear-gradient(180deg, #FFFFFF, #FFF9ED);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.weekly-result-pdf {
+  aspect-ratio: 4 / 3;
+  background: #F8FAFC;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.weekly-result-card h3 {
+  color: var(--primary-dark);
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin-bottom: 0.35rem;
+}
+
+.weekly-result-week {
+  color: var(--red);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+}
+
 .results-summary-band {
   display: grid;
   gap: 1rem;

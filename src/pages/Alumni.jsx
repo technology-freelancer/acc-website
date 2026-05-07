@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-import { fetchSheetData } from '../api/googleSheetApi.js';
+import { fetchSheetData, getCachedSheetData } from '../api/googleSheetApi.js';
 import AlumniCard from '../components/AlumniCard.jsx';
-import { getSiteData } from '../data/animateData.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 export default function Alumni() {
   const { language } = useLanguage();
-  const { alumni: defaultAlumni } = getSiteData(language);
-  const [alumni, setAlumni] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [alumni, setAlumni] = useState(() => getCachedSheetData('getAlumni'));
+  const [loading, setLoading] = useState(false);
   const text = {
     en: {
       eyebrow: 'Alumni network',
@@ -34,12 +32,12 @@ export default function Alumni() {
 
   useEffect(() => {
     fetchSheetData('getAlumni')
-      .then((data) => setAlumni(data.length ? data : defaultAlumni))
+      .then((data) => setAlumni(data))
       .finally(() => setLoading(false));
-  }, [defaultAlumni]);
+  }, []);
 
-  const batchCount = new Set(alumni.map((item) => item.batch).filter(Boolean)).size || defaultAlumni.length;
-  const yearCount = new Set(alumni.map((item) => item.year).filter(Boolean)).size || 1;
+  const batchCount = new Set(alumni.map((item) => item.batch).filter(Boolean)).size;
+  const yearCount = new Set(alumni.map((item) => item.year).filter(Boolean)).size;
 
   return (
     <section className="section-padding page-top">
@@ -48,7 +46,7 @@ export default function Alumni() {
         <h1 className="fw-bold mt-3">{text.title}</h1>
         <p className="lead text-slate">{text.intro}</p>
         <div className="page-summary-strip">
-          <SummaryItem icon="bi-mortarboard-fill" value={alumni.length || defaultAlumni.length} label={text.achievers} />
+          <SummaryItem icon="bi-mortarboard-fill" value={alumni.length} label={text.achievers} />
           <SummaryItem icon="bi-collection-fill" value={batchCount} label={text.batches} />
           <SummaryItem icon="bi-calendar2-check-fill" value={yearCount} label={text.years} />
         </div>

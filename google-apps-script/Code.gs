@@ -7,6 +7,9 @@ var SHEETS = {
     'id', 'studentName', 'className', 'subject', 'testName', 'testType', 'weekLabel',
     'marks', 'totalMarks', 'percentage', 'rank', 'date', 'photoUrl', 'notes', 'status', 'createdAt'
   ],
+  WeeklyResults: [
+    'id', 'className', 'subject', 'testName', 'weekLabel', 'date', 'pdfUrl', 'notes', 'status', 'createdAt'
+  ],
   Alumni: ['id', 'studentName', 'batch', 'year', 'currentStatus', 'achievement', 'message', 'photoUrl', 'status', 'createdAt'],
   Testimonials: ['id', 'studentName', 'batch', 'message', 'photoUrl', 'rating', 'year', 'status', 'createdAt'],
   Announcements: ['id', 'title', 'description', 'date', 'type', 'status', 'createdAt'],
@@ -17,6 +20,7 @@ var SHEETS = {
 
 var PUBLIC_GET_ACTIONS = {
   getResults: function() { return getActiveRows('Results'); },
+  getWeeklyResults: function() { return getActiveRows('WeeklyResults'); },
   getAlumni: function() { return getActiveRows('Alumni'); },
   getTestimonials: function() { return getActiveRows('Testimonials'); },
   getAnnouncements: function() { return getActiveRows('Announcements'); },
@@ -26,6 +30,7 @@ var PUBLIC_GET_ACTIONS = {
 
 var ADMIN_POST_ACTIONS = {
   addResult: addResult,
+  addWeeklyResult: addWeeklyResult,
   addAlumni: addAlumni,
   addTestimonial: addTestimonial,
   addAnnouncement: addAnnouncement,
@@ -95,6 +100,23 @@ function addResult(payload) {
   };
   appendRecord('Results', record);
   return sendResponse(true, 'Weekly result added successfully.', record);
+}
+
+function addWeeklyResult(payload) {
+  var record = {
+    id: payload.id || makeId('WRS'),
+    className: payload.className,
+    subject: payload.subject,
+    testName: payload.testName,
+    weekLabel: payload.weekLabel || makeWeekLabel(payload.date),
+    date: payload.date || today(),
+    pdfUrl: toDrivePreviewUrl(payload.pdfUrl),
+    notes: payload.notes || '',
+    status: payload.status || 'active',
+    createdAt: nowIso()
+  };
+  appendRecord('WeeklyResults', record);
+  return sendResponse(true, 'Weekly result PDF added successfully.', record);
 }
 
 function addAlumni(payload) {
@@ -377,5 +399,13 @@ function toDriveViewUrl(url) {
   if (!value) return '';
   var match = value.match(/\/d\/([^/]+)/) || value.match(/[?&]id=([^&]+)/);
   if (match && match[1]) return 'https://drive.google.com/uc?export=view&id=' + match[1];
+  return value;
+}
+
+function toDrivePreviewUrl(url) {
+  var value = String(url || '').trim();
+  if (!value) return '';
+  var match = value.match(/\/d\/([^/]+)/) || value.match(/[?&]id=([^&]+)/);
+  if (match && match[1]) return 'https://drive.google.com/file/d/' + match[1] + '/preview';
   return value;
 }

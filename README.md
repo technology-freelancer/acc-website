@@ -16,7 +16,7 @@ npm install
 Copy `.env.example` to `.env` and add your Apps Script web app URL:
 
 ```bash
-VITE_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
+VITE_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/AKfycbxILzEmehgUmXUHYdq6X44QEQbRjBiJ3e75Lf9TM7e1BusYXl6XNpgYnyO2CgpdSBRg3g/exec
 ```
 
 ## Run

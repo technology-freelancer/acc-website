@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { fetchSheetData } from '../api/googleSheetApi.js';
+import { fetchSheetData, getCachedSheetData } from '../api/googleSheetApi.js';
 import ResultCard from '../components/ResultCard.jsx';
-import { getSiteData, results as defaultResults } from '../data/animateData.js';
+import WeeklyResultCard from '../components/WeeklyResultCard.jsx';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 const resultsText = {
@@ -11,6 +11,9 @@ const resultsText = {
     intro: 'Recent toppers from Animate Coaching Classes across Maths, English and Science batches.',
     loading: 'Loading results...',
     empty: 'No results found.',
+    weeklyTitle: 'Weekly Test Result PDFs',
+    weeklyIntro: 'Download subject-wise weekly test result PDFs, arranged by the latest week first.',
+    weeklyEmpty: 'No weekly result PDFs have been added yet.',
     labels: { className: 'Class', subject: 'Subject', testName: 'Test Name' },
     table: ['Student', 'Class', 'Subject', 'Test', 'Marks', 'Percentage', 'Rank'],
     search: 'Search',
@@ -28,6 +31,9 @@ const resultsText = {
     intro: 'ॲनिमेट कोचिंग क्लासेसमधील गणित, इंग्रजी आणि विज्ञान बॅचेसचे अलीकडील यशस्वी विद्यार्थी.',
     loading: 'निकाल लोड होत आहेत...',
     empty: 'कोणतेही निकाल सापडले नाहीत.',
+    weeklyTitle: 'साप्ताहिक टेस्ट निकाल PDF',
+    weeklyIntro: 'विषयानुसार साप्ताहिक टेस्ट निकाल PDF नवीन आठवड्यानुसार पहा.',
+    weeklyEmpty: 'सध्या साप्ताहिक निकाल PDF उपलब्ध नाहीत.',
     labels: { className: 'इयत्ता', subject: 'विषय', testName: 'परीक्षा' },
     table: ['विद्यार्थी', 'इयत्ता', 'विषय', 'परीक्षा', 'गुण', 'टक्केवारी', 'रँक'],
     search: 'शोधा',
@@ -44,12 +50,14 @@ const resultsText = {
 export default function Results() {
   const { language } = useLanguage();
   const text = resultsText[language];
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState(() => getCachedSheetData('getResults'));
+  const [weeklyResults, setWeeklyResults] = useState(() => getCachedSheetData('getWeeklyResults'));
   const [filters, setFilters] = useState({ className: '', subject: '', testName: '' });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchSheetData('getResults').then((data) => setResults(data.length ? data : defaultResults)).finally(() => setLoading(false));
+    fetchSheetData('getResults').then((data) => setResults(data)).finally(() => setLoading(false));
+    fetchSheetData('getWeeklyResults').then((data) => setWeeklyResults(data));
   }, []);
 
   const filteredResults = useMemo(() => {
@@ -65,12 +73,19 @@ export default function Results() {
     const subjectCount = new Set(results.flatMap((result) => String(result.subject).split(/,|and/).map((subject) => subject.trim()).filter(Boolean))).size;
 
     return [
-      { value: percentages.length ? `${Math.max(...percentages).toFixed(0)}%` : '99%', label: text.summary.topScore, icon: 'bi-trophy-fill' },
-      { value: results.length || defaultResults.length, label: text.summary.achievers, icon: 'bi-people-fill' },
-      { value: subjectCount || 3, label: text.summary.subjects, icon: 'bi-journal-bookmark-fill' },
+      { value: percentages.length ? `${Math.max(...percentages).toFixed(0)}%` : '0%', label: text.summary.topScore, icon: 'bi-trophy-fill' },
+      { value: results.length, label: text.summary.achievers, icon: 'bi-people-fill' },
+      { value: subjectCount, label: text.summary.subjects, icon: 'bi-journal-bookmark-fill' },
       { value: text.summary.weekly, label: text.summary.practice, icon: 'bi-calendar-check-fill' }
     ];
   }, [results, text.summary]);
+
+  const groupedWeeklyResults = useMemo(() => {
+    return weeklyResults.reduce((groups, result) => {
+      const label = result.weekLabel || result.date || 'Weekly Results';
+      return { ...groups, [label]: [...(groups[label] || []), result] };
+    }, {});
+  }, [weeklyResults]);
 
   return (
     <section className="section-padding page-top">
@@ -78,6 +93,29 @@ export default function Results() {
         <span className="eyebrow">{text.eyebrow}</span>
         <h1 className="fw-bold mt-3">{text.title}</h1>
         <p className="lead text-slate">{text.intro}</p>
+
+        <div className="weekly-results-panel">
+          <div className="section-title-row">
+            <div>
+              <span className="eyebrow">Weekly tests</span>
+              <h2 className="fw-bold mt-2">{text.weeklyTitle}</h2>
+              <p className="text-slate mb-0">{text.weeklyIntro}</p>
+            </div>
+          </div>
+          {weeklyResults.length === 0 && <div className="empty-state mt-3">{text.weeklyEmpty}</div>}
+          {Object.entries(groupedWeeklyResults).map(([weekLabel, items]) => (
+            <div className="weekly-result-group" key={weekLabel}>
+              <h3>{weekLabel}</h3>
+              <div className="row g-4">
+                {items.map((item) => (
+                  <div className="col-md-6 col-xl-4" key={item.id}>
+                    <WeeklyResultCard result={item} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
 
         <div className="results-summary-band">
           {resultStats.map((stat) => (

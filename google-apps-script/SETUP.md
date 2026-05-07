@@ -35,6 +35,7 @@ It creates these tabs:
 
 - Admins
 - Results
+- WeeklyResults
 - Alumni
 - Testimonials
 - Announcements
@@ -85,6 +86,7 @@ Admin app calls:
 ```text
 login
 addResult
+addWeeklyResult
 addAlumni
 addTestimonial
 addAnnouncement
@@ -96,6 +98,7 @@ Public website calls:
 
 ```text
 getResults
+getWeeklyResults
 getAlumni
 getTestimonials
 getAnnouncements
