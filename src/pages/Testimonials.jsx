@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-import { fetchSheetData } from '../api/googleSheetApi.js';
+import { fetchSheetData, getCachedSheetData } from '../api/googleSheetApi.js';
 import TestimonialCard from '../components/TestimonialCard.jsx';
-import { getSiteData } from '../data/animateData.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 export default function Testimonials() {
   const { language } = useLanguage();
-  const { testimonials: defaultTestimonials } = getSiteData(language);
-  const [testimonials, setTestimonials] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [testimonials, setTestimonials] = useState(() => getCachedSheetData('getTestimonials'));
+  const [loading, setLoading] = useState(false);
   const text = {
     en: {
       eyebrow: 'Success stories',
@@ -33,8 +31,8 @@ export default function Testimonials() {
   }[language];
 
   useEffect(() => {
-    fetchSheetData('getTestimonials').then((data) => setTestimonials(data.length ? data : defaultTestimonials)).finally(() => setLoading(false));
-  }, [defaultTestimonials]);
+    fetchSheetData('getTestimonials').then((data) => setTestimonials(data)).finally(() => setLoading(false));
+  }, []);
 
   return (
     <section className="section-padding page-top">
@@ -44,7 +42,7 @@ export default function Testimonials() {
         <p className="lead text-slate">{text.intro}</p>
         <div className="page-summary-strip">
           <SummaryItem icon="bi-star-fill" value="5.0" label={text.rating} />
-          <SummaryItem icon="bi-chat-heart-fill" value={testimonials.length || defaultTestimonials.length} label={text.voices} />
+          <SummaryItem icon="bi-chat-heart-fill" value={testimonials.length} label={text.voices} />
           <SummaryItem icon="bi-shield-check" value="100%" label={text.trust} />
         </div>
         {loading && <p className="text-muted">{text.loading}</p>}

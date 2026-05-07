@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchSheetData } from '../api/googleSheetApi.js';
+import { fetchSheetData, getCachedSheetData, mergeCourses } from '../api/googleSheetApi.js';
 import CourseCard from '../components/CourseCard.jsx';
 import { getSiteData } from '../data/animateData.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
@@ -7,8 +7,8 @@ import { useLanguage } from '../i18n/LanguageContext.jsx';
 export default function Courses() {
   const { language } = useLanguage();
   const { courses: defaultCourses } = getSiteData(language);
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState(() => mergeCourses(defaultCourses, getCachedSheetData('getCourses')));
+  const [loading, setLoading] = useState(false);
   const text = {
     en: {
       eyebrow: 'Academic programs',
@@ -27,7 +27,7 @@ export default function Courses() {
   }[language];
 
   useEffect(() => {
-    fetchSheetData('getCourses').then((data) => setCourses(data.length ? data : defaultCourses)).finally(() => setLoading(false));
+    fetchSheetData('getCourses').then((data) => setCourses(mergeCourses(defaultCourses, data))).finally(() => setLoading(false));
   }, [defaultCourses]);
 
   return (

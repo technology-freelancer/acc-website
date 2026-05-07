@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { fetchSheetData, getCachedSheetData, mergeCourses } from '../api/googleSheetApi.js';
 import { getSiteData } from '../data/animateData.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 
@@ -40,9 +42,14 @@ const pageText = {
 export default function CourseDetail() {
   const { courseId } = useParams();
   const { language } = useLanguage();
-  const { brand, courses } = getSiteData(language);
+  const { brand, courses: defaultCourses } = getSiteData(language);
+  const [courses, setCourses] = useState(() => mergeCourses(defaultCourses, getCachedSheetData('getCourses')));
   const text = pageText[language];
   const course = courses.find((item) => item.id === courseId);
+
+  useEffect(() => {
+    fetchSheetData('getCourses').then((data) => setCourses(mergeCourses(defaultCourses, data)));
+  }, [defaultCourses]);
 
   if (!course) {
     return (
@@ -86,14 +93,14 @@ export default function CourseDetail() {
             <article className="course-detail-section">
               <span className="eyebrow">{text.overview}</span>
               <h2>{text.idealFor}</h2>
-              <p>{course.idealFor}</p>
+              <p>{course.idealFor || `${course.className} students preparing for ${course.subjects}.`}</p>
             </article>
 
             <article className="course-detail-section mt-4">
               <span className="eyebrow">{text.focus}</span>
               <h2>{text.focus}</h2>
               <div className="course-detail-focus">
-                {course.focusAreas.map((item) => (
+                {(course.focusAreas || String(course.subjects || '').split(',').map((item) => item.trim()).filter(Boolean)).map((item) => (
                   <span key={item}><i className="bi bi-check2-circle" />{item}</span>
                 ))}
               </div>
@@ -102,7 +109,7 @@ export default function CourseDetail() {
             <article className="course-detail-section mt-4">
               <span className="eyebrow">{text.outcome}</span>
               <h2>{text.outcome}</h2>
-              <p>{course.outcome}</p>
+              <p>{course.outcome || course.description}</p>
             </article>
           </div>
 

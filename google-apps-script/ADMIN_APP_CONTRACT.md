@@ -51,6 +51,26 @@ photoUrl
 notes
 ```
 
+## Weekly Result PDF Fields
+
+Action: `addWeeklyResult`
+
+```text
+className
+subject
+testName
+weekLabel
+date
+pdfUrl
+notes
+```
+
+Use a Google Drive PDF sharing link. Apps Script converts normal Drive links into preview links for the website.
+
+```text
+https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+```
+
 ## Alumni Fields
 
 Action: `addAlumni`
@@ -78,6 +98,7 @@ addGalleryItem
 
 ```text
 getResults
+getWeeklyResults
 getAlumni
 getTestimonials
 getAnnouncements

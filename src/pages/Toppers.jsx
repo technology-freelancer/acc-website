@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { fetchSheetData } from '../api/googleSheetApi.js';
+import { fetchSheetData, getCachedSheetData } from '../api/googleSheetApi.js';
 import TopperCard from '../components/TopperCard.jsx';
-import { results as defaultResults } from '../data/animateData.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 export default function Toppers() {
   const { language } = useLanguage();
-  const [toppers, setToppers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [toppers, setToppers] = useState(() => [...getCachedSheetData('getResults')].sort((a, b) => Number(a.rank) - Number(b.rank)));
+  const [loading, setLoading] = useState(false);
   const text = {
     en: {
       eyebrow: 'Student achievers',
@@ -33,7 +32,7 @@ export default function Toppers() {
 
   useEffect(() => {
     fetchSheetData('getResults')
-      .then((data) => setToppers([...(data.length ? data : defaultResults)].sort((a, b) => Number(a.rank) - Number(b.rank))))
+      .then((data) => setToppers([...data].sort((a, b) => Number(a.rank) - Number(b.rank))))
       .finally(() => setLoading(false));
   }, []);
 
@@ -44,9 +43,9 @@ export default function Toppers() {
         <h1 className="fw-bold mt-3">{text.title}</h1>
         <p className="lead text-slate">{text.intro}</p>
         <div className="page-summary-strip">
-          <SummaryItem icon="bi-trophy-fill" value={toppers.length ? `${Math.max(...toppers.map((topper) => Number(topper.percentage) || 0)).toFixed(0)}%` : '99%'} label={text.topScore} />
-          <SummaryItem icon="bi-people-fill" value={toppers.length || defaultResults.length} label={text.listed} />
-          <SummaryItem icon="bi-award-fill" value="1-3" label={text.rankers} />
+          <SummaryItem icon="bi-trophy-fill" value={toppers.length ? `${Math.max(...toppers.map((topper) => Number(topper.percentage) || 0)).toFixed(0)}%` : '0%'} label={text.topScore} />
+          <SummaryItem icon="bi-people-fill" value={toppers.length} label={text.listed} />
+          <SummaryItem icon="bi-award-fill" value={toppers.filter((topper) => Number(topper.rank) <= 3).length} label={text.rankers} />
         </div>
         {loading && <p className="text-muted">{text.loading}</p>}
         {!loading && toppers.length === 0 && <div className="empty-state">{text.empty}</div>}
