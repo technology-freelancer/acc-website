@@ -88,19 +88,15 @@ export default function Home() {
   }[language];
 
   useEffect(() => {
-    Promise.all([
-      fetchSheetData('getResults'),
-      fetchSheetData('getTestimonials'),
-      fetchSheetData('getAnnouncements')
-    ])
-      .then(([sheetResults, sheetTestimonials, sheetAnnouncements]) => {
-        setSheetData({
-          results: sheetResults,
-          testimonials: sheetTestimonials,
-          announcements: sheetAnnouncements
-        });
-      })
-      .finally(() => setLoading(false));
+    const updateSection = (key, action) => {
+      fetchSheetData(action)
+        .then((data) => setSheetData((current) => ({ ...current, [key]: data })))
+        .finally(() => setLoading(false));
+    };
+
+    updateSection('results', 'getResults');
+    updateSection('testimonials', 'getTestimonials');
+    updateSection('announcements', 'getAnnouncements');
   }, []);
 
   const displayTestimonials = sheetData.testimonials;
