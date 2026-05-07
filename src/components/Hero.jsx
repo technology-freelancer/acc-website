@@ -14,7 +14,7 @@ export default function Hero() {
       results: 'View Results',
       row1: '5th-10th English, Maths and Science',
       row2: "Shakil Kazi Sir's English Class for 11th and 12th",
-      row3: 'Atik Kazi - Lingayat Maths Classes for 11th and 12th',
+      row3: 'Kazi - Lingayat Maths Classes for 11th and 12th',
       call: 'Call'
     },
     mr: {

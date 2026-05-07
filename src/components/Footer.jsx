@@ -11,14 +11,16 @@ export default function Footer() {
       explore: 'Explore',
       contact: 'Contact',
       links: ['Courses', 'Gallery', 'Results', 'Toppers', 'Testimonials'],
-      rights: 'All rights reserved.'
+      rights: 'All rights reserved.',
+      builtBy: 'Website built by'
     },
     mr: {
       summary: 'परभणीतील विद्यार्थ्यांसाठी इंग्रजी, गणित आणि विज्ञान कोचिंग.',
       explore: 'पहा',
       contact: 'संपर्क',
       links: ['कोर्सेस', 'गॅलरी', 'निकाल', 'टॉपर्स', 'अभिप्राय'],
-      rights: 'सर्व हक्क राखीव.'
+      rights: 'सर्व हक्क राखीव.',
+      builtBy: 'वेबसाइट तयार केली'
     }
   }[language];
   const footerLinks = [
@@ -61,7 +63,13 @@ export default function Footer() {
           </div>
         </div>
         <hr className="border-light-subtle my-4" />
-        <p className="small mb-0 text-white-75">© {new Date().getFullYear()} {brand.name}. {text.rights}</p>
+        <div className="footer-bottom-row">
+          <p className="small mb-0 text-white-75">© {new Date().getFullYear()} {brand.name}. {text.rights}</p>
+          <a className="footer-credit" href="https://www.zenraxconsulting.com/" target="_blank" rel="noreferrer">
+            <span>{text.builtBy}</span>
+            <img src="/animate-assets/zenrax-logo.png" alt="Zenrax Consulting" />
+          </a>
+        </div>
       </div>
     </footer>
   );

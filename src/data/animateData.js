@@ -11,7 +11,7 @@ const galleryTitles = {
     'Achievement celebration', 'Class 10 achiever', 'Maths topper', 'NMMS achievers',
     'Maths entrance coaching', 'Class event', 'Learning with confidence', 'Animate family',
     'Result announcement', 'Class 10 toppers', 'Student success wall', 'Board achiever',
-    'Maths high scorer', 'Board topper', 'Atik Kazi Sir guidance', 'Animate classroom'
+    'Maths high scorer', 'Board topper', 'Kazi Sir guidance', 'Animate classroom'
   ],
   mr: [
     'वर्गातील सराव सत्र', 'पालक बैठक व मार्गदर्शन', 'विद्यार्थी समूह उपक्रम', 'बक्षीस वितरण',
@@ -22,7 +22,7 @@ const galleryTitles = {
     'यशाचा आनंद', 'इयत्ता १०वी यशस्वी विद्यार्थी', 'गणित टॉपर', 'NMMS यशस्वी विद्यार्थी',
     'गणित प्रवेश परीक्षा मार्गदर्शन', 'क्लास कार्यक्रम', 'आत्मविश्वासाने शिक्षण', 'ॲनिमेट परिवार',
     'निकाल घोषणा', 'इयत्ता १०वी टॉपर्स', 'विद्यार्थी यश भिंत', 'बोर्ड यशस्वी विद्यार्थी',
-    'गणित उच्च गुण', 'बोर्ड टॉपर', 'अतिक काजी सरांचे मार्गदर्शन', 'ॲनिमेट वर्ग'
+    'गणित उच्च गुण', 'बोर्ड टॉपर', 'काजी सरांचे मार्गदर्शन', 'ॲनिमेट वर्ग'
   ]
 };
 
@@ -66,7 +66,7 @@ export const dataByLanguage = {
         address: 'Animate Coaching Classes'
       },
       {
-        name: 'Atik Kazi - Lingayat Maths Classes',
+        name: 'Kazi - Lingayat Maths Classes',
         classes: 'For 11th and 12th',
         subjects: 'Maths for Board, JEE and MHT-CET',
         address: 'In front of Patil Hospital, Old Pedgaon Road, Parbhani'
@@ -127,7 +127,7 @@ export const dataByLanguage = {
       {
         id: 'maths-hsc',
         className: '11th and 12th',
-        courseName: 'Atik Kazi - Lingayat Maths Classes',
+        courseName: 'Kazi - Lingayat Maths Classes',
         description: 'Maths coaching for 11th and 12th students with board-focused practice and entrance exam support.',
         subjects: 'Maths, JEE, MHT-CET',
         duration: 'Regular and crash batches',
@@ -192,7 +192,7 @@ export const dataByLanguage = {
         id: 'a3',
         type: 'Maths Class',
         date: '11th and 12th',
-        title: 'Atik Kazi - Lingayat Maths Classes',
+        title: 'Kazi - Lingayat Maths Classes',
         description: 'Maths batches are available near Patil Hospital, Old Pedgaon Road, Parbhani.'
       }
     ]
@@ -227,7 +227,7 @@ export const dataByLanguage = {
         address: 'ॲनिमेट कोचिंग क्लासेस'
       },
       {
-        name: 'अतिक काजी - लिंगायत मॅथ्स क्लासेस',
+        name: 'काजी - लिंगायत मॅथ्स क्लासेस',
         classes: 'इयत्ता ११वी व १२वी',
         subjects: 'बोर्ड, JEE आणि MHT-CET साठी गणित',
         address: 'पाटील हॉस्पिटल समोर, जुना पेडगाव रोड, परभणी'
@@ -288,7 +288,7 @@ export const dataByLanguage = {
       {
         id: 'maths-hsc',
         className: 'इयत्ता ११वी व १२वी',
-        courseName: 'अतिक काजी - लिंगायत मॅथ्स क्लासेस',
+        courseName: 'काजी - लिंगायत मॅथ्स क्लासेस',
         description: '११वी व १२वी विद्यार्थ्यांसाठी बोर्ड-केंद्रित सराव आणि प्रवेश परीक्षेच्या तयारीसह गणित कोचिंग.',
         subjects: 'गणित, JEE, MHT-CET',
         duration: 'नियमित आणि क्रॅश बॅचेस',
@@ -353,7 +353,7 @@ export const dataByLanguage = {
         id: 'a3',
         type: 'मॅथ्स क्लास',
         date: '११वी व १२वी',
-        title: 'अतिक काजी - लिंगायत मॅथ्स क्लासेस',
+        title: 'काजी - लिंगायत मॅथ्स क्लासेस',
         description: 'पाटील हॉस्पिटल समोर, जुना पेडगाव रोड, परभणी येथे गणित बॅचेस उपलब्ध.'
       }
     ]

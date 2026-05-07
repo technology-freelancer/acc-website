@@ -31,7 +31,7 @@ const contactText = {
     classOptions: [
       '5th to 10th English, Maths, Science',
       "11th and 12th Shakil Kazi Sir's English Class",
-      '11th and 12th Atik Kazi - Lingayat Maths Classes'
+      '11th and 12th Kazi - Lingayat Maths Classes'
     ],
     sending: 'Sending...',
     submit: 'Submit enquiry',
@@ -69,7 +69,7 @@ const contactText = {
     classOptions: [
       '५वी ते १०वी इंग्रजी, गणित, विज्ञान',
       '११वी व १२वी शकील काजी सर इंग्लिश क्लास',
-      '११वी व १२वी अतिक काजी - लिंगायत मॅथ्स क्लासेस'
+      '११वी व १२वी काजी - लिंगायत मॅथ्स क्लासेस'
     ],
     sending: 'पाठवत आहे...',
     submit: 'चौकशी पाठवा',
