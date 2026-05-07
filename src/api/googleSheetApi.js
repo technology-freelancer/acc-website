@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || '';
+const DEFAULT_API_URL = 'https://script.google.com/macros/s/AKfycbxILzEmehgUmXUHYdq6X44QEQbRjBiJ3e75Lf9TM7e1BusYXl6XNpgYnyO2CgpdSBRg3g/exec';
+const API_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || DEFAULT_API_URL;
 
 const fallbackByAction = {
   getResults: [],
