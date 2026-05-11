@@ -1,5 +1,73 @@
 const asset = (name) => `/animate-assets/${name}.jpeg`;
 const founderAsset = (name) => `/animate-assets/${name}.jpeg`;
+const latestResultPoster = '/animate-assets/class-10-result-2025-2026.jpeg';
+
+const class10ResultStudents = [
+  ['गायत्री कोठारी', 97.20],
+  ['वेदिका गरड', 97.00],
+  ['धनश्री रेंगे', 96.80],
+  ['समर्थ बावच', 96.60],
+  ['निरंजन देशमुख', 95.80],
+  ['नेहा दराडे', 95.60],
+  ['व्यंकटेश गिराम', 95.40],
+  ['वेदिका देशमुख', 95.20],
+  ['सोनल गव्हेराव', 95.20],
+  ['तृप्ती देशमुख', 95.00],
+  ['अमरनाथ देवडे', 95.00],
+  ['प्रतिक्षा तिथे', 93.20],
+  ['अस्तिता काळे', 92.80],
+  ['पूर्वा जोशी', 92.60],
+  ['साईनाथ देवकते', 92.60],
+  ['ऐश्वर्या कदम', 92.40],
+  ['श्रद्धा पांढरे', 92.00],
+  ['श्रुतिका जाधव', 91.60],
+  ['श्रावणी राठोड', 91.40],
+  ['हनुमान कराळे', 91.20],
+  ['सचिन शेवाळे', 90.80],
+  ['ऋतुजा समुद्रे', 90.60],
+  ['वैष्णवी रेंगे', 89.60],
+  ['अदनान काजी', 89.40],
+  ['शिवम शिंदे', 88.80],
+  ['श्रेया मगर', 88.40],
+  ['सृष्टी कदम', 88.40],
+  ['अतुल खिस्ते', 88.20],
+  ['तनवी सरनाईक', 88.00],
+  ['पल्लवी भाले', 87.80],
+  ['तनुजा कदम', 87.60],
+  ['वैष्णवी कुटे', 87.60],
+  ['हरीओम भुतेकर', 86.00],
+  ['गजानन शिंदे', 86.00],
+  ['ऋतुजा टेहरे', 85.60],
+  ['चेतन भोके', 85.00],
+  ['संकेत अंभोरे', 84.80],
+  ['गजानन नेमाने', 84.80],
+  ['समृद्धी मिसाळ', 84.80],
+  ['यास्मिन शेख', 84.00],
+  ['सायली कदम', 83.40],
+  ['आरती भाले', 83.00],
+  ['श्रुती सामाले', 82.80],
+  ['सिद्धांत नाईक', 82.80],
+  ['नियुती कंठाळे', 82.80],
+  ['अधीरा गायकवाड', 82.60],
+  ['श्रावणी हजारे', 82.00],
+  ['सोहम शिनगारे', 81.00],
+  ['पार्थ पवार', 81.00],
+  ['मनोज नंदुये', 80.60],
+  ['तनुजा सामाले', 79.20],
+  ['अल्फिया खान', 78.00]
+].map(([studentName, percentage], index) => ({
+  id: `class-10-result-2025-2026-${index + 1}`,
+  studentName,
+  className: 'Class 10',
+  subject: 'All Subjects',
+  testName: 'SSC Board Result 2025-2026',
+  marks: percentage.toFixed(2),
+  totalMarks: 100,
+  percentage: percentage.toFixed(2),
+  rank: index + 1,
+  date: '2025-2026',
+  photoUrl: asset('image-28')
+}));
 
 const galleryTitles = {
   en: [
@@ -90,6 +158,7 @@ export const dataByLanguage = {
     ],
     galleryImages: makeGallery('en'),
     posterImages: [
+      { src: latestResultPoster, title: 'Class 10 result 2025-2026' },
       { src: asset('image-30'), title: 'Class 10 toppers' },
       { src: asset('image-12'), title: 'English classes' },
       { src: asset('image-11'), title: '11th and 12th batches' },
@@ -139,11 +208,20 @@ export const dataByLanguage = {
       }
     ],
     highlights: [
-      ['99%', 'Top Class 10 result', 'bi-trophy-fill'],
-      ['36', 'Photos in gallery', 'bi-images'],
+      ['97.20%', 'Top Class 10 result', 'bi-trophy-fill'],
+      ['52', 'Class 10 achievers listed', 'bi-people-fill'],
       ['3', 'Classes under Animate', 'bi-buildings-fill'],
       ['5-12', 'School to HSC support', 'bi-mortarboard-fill']
     ],
+    latestResult: {
+      poster: latestResultPoster,
+      eyebrow: 'Recent result',
+      title: 'Class 10 students performed very well in 2025-2026',
+      intro: 'Animate Coaching Classes congratulates every Class 10 achiever. Gayatri Kothari secured 97.20% and Vedika Garad secured 97.00%, with 52 students listed from the recent result poster.',
+      badge: 'Admissions open',
+      cta: 'View complete list'
+    },
+    results: class10ResultStudents,
     testimonials: [],
     alumni: [],
     announcements: [
@@ -210,6 +288,7 @@ export const dataByLanguage = {
     ],
     galleryImages: makeGallery('mr'),
     posterImages: [
+      { src: latestResultPoster, title: 'इयत्ता १०वी निकाल २०२५-२०२६' },
       { src: asset('image-30'), title: 'इयत्ता १०वी टॉपर्स' },
       { src: asset('image-12'), title: 'इंग्रजी क्लासेस' },
       { src: asset('image-11'), title: '११वी व १२वी बॅचेस' },
@@ -259,11 +338,20 @@ export const dataByLanguage = {
       }
     ],
     highlights: [
-      ['99%', 'इयत्ता १०वी सर्वोच्च निकाल', 'bi-trophy-fill'],
-      ['36', 'गॅलरीतील फोटो', 'bi-images'],
+      ['97.20%', 'इयत्ता १०वी सर्वोच्च निकाल', 'bi-trophy-fill'],
+      ['52', 'इयत्ता १०वी यशस्वी विद्यार्थी', 'bi-people-fill'],
       ['3', 'ॲनिमेट अंतर्गत क्लासेस', 'bi-buildings-fill'],
       ['5-12', 'शाळेपासून एचएससीपर्यंत मार्गदर्शन', 'bi-mortarboard-fill']
     ],
+    latestResult: {
+      poster: latestResultPoster,
+      eyebrow: 'अलीकडील निकाल',
+      title: '२०२५-२०२६ मध्ये इयत्ता १०वी विद्यार्थ्यांची उत्कृष्ट कामगिरी',
+      intro: 'ॲनिमेट कोचिंग क्लासेस सर्व यशस्वी विद्यार्थ्यांचे हार्दिक अभिनंदन करते. गायत्री कोठारी ९७.२०% आणि वेदिका गरड ९७.००% मिळवून आघाडीवर आहेत.',
+      badge: 'प्रवेश सुरू',
+      cta: 'संपूर्ण यादी पहा'
+    },
+    results: class10ResultStudents,
     testimonials: [],
     alumni: [],
     announcements: [
@@ -278,7 +366,7 @@ export const dataByLanguage = {
   }
 };
 
-export const results = [];
+export const results = class10ResultStudents;
 
 export const getSiteData = (language = 'en') => dataByLanguage[language] || dataByLanguage.en;
 
@@ -289,6 +377,7 @@ export const {
   posterImages,
   courses,
   highlights,
+  latestResult,
   testimonials,
   alumni,
   announcements

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { fetchSheetData, getCachedSheetData } from '../api/googleSheetApi.js';
 import ResultCard from '../components/ResultCard.jsx';
 import WeeklyResultCard from '../components/WeeklyResultCard.jsx';
+import { getSiteData } from '../data/animateData.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 const resultsText = {
@@ -50,6 +51,7 @@ const resultsText = {
 export default function Results() {
   const { language } = useLanguage();
   const text = resultsText[language];
+  const { latestResult } = getSiteData(language);
   const [results, setResults] = useState(() => getCachedSheetData('getResults'));
   const [weeklyResults, setWeeklyResults] = useState(() => getCachedSheetData('getWeeklyResults'));
   const [filters, setFilters] = useState({ className: '', subject: '', testName: '' });
@@ -73,7 +75,7 @@ export default function Results() {
     const subjectCount = new Set(results.flatMap((result) => String(result.subject).split(/,|and/).map((subject) => subject.trim()).filter(Boolean))).size;
 
     return [
-      { value: percentages.length ? `${Math.max(...percentages).toFixed(0)}%` : '0%', label: text.summary.topScore, icon: 'bi-trophy-fill' },
+      { value: percentages.length ? `${Math.max(...percentages).toFixed(2)}%` : '0%', label: text.summary.topScore, icon: 'bi-trophy-fill' },
       { value: results.length, label: text.summary.achievers, icon: 'bi-people-fill' },
       { value: subjectCount, label: text.summary.subjects, icon: 'bi-journal-bookmark-fill' },
       { value: text.summary.weekly, label: text.summary.practice, icon: 'bi-calendar-check-fill' }
@@ -93,6 +95,15 @@ export default function Results() {
         <span className="eyebrow">{text.eyebrow}</span>
         <h1 className="fw-bold mt-3">{text.title}</h1>
         <p className="lead text-slate">{text.intro}</p>
+
+        <div className="result-poster-panel">
+          <div>
+            <span className="eyebrow">{latestResult.eyebrow}</span>
+            <h2>{latestResult.title}</h2>
+            <p>{latestResult.intro}</p>
+          </div>
+          <img src={latestResult.poster} alt={latestResult.title} />
+        </div>
 
         <div className="weekly-results-panel">
           <div className="section-title-row">

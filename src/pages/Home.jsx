@@ -11,7 +11,7 @@ import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 export default function Home() {
   const { language } = useLanguage();
-  const { announcements, brand, courses, galleryImages, highlights } = getSiteData(language);
+  const { announcements, brand, courses, galleryImages, highlights, latestResult } = getSiteData(language);
   const [sheetData, setSheetData] = useState(() => ({
     results: getCachedSheetData('getResults'),
     testimonials: getCachedSheetData('getTestimonials'),
@@ -118,6 +118,27 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding pt-0">
+        <div className="container">
+          <div className="latest-result-showcase">
+            <div className="latest-result-copy">
+              <span className="eyebrow">{latestResult.eyebrow}</span>
+              <h2>{latestResult.title}</h2>
+              <p>{latestResult.intro}</p>
+              <div className="latest-result-actions">
+                <Link className="btn btn-primary" to="/results">
+                  <i className="bi bi-list-stars me-2" />{latestResult.cta}
+                </Link>
+                <span className="badge-soft"><i className="bi bi-megaphone me-2" />{latestResult.badge}</span>
+              </div>
+            </div>
+            <Link className="latest-result-poster" to="/results" aria-label={latestResult.cta}>
+              <img src={latestResult.poster} alt={latestResult.title} />
+            </Link>
           </div>
         </div>
       </section>

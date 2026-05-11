@@ -43,7 +43,7 @@ export default function Toppers() {
         <h1 className="fw-bold mt-3">{text.title}</h1>
         <p className="lead text-slate">{text.intro}</p>
         <div className="page-summary-strip">
-          <SummaryItem icon="bi-trophy-fill" value={toppers.length ? `${Math.max(...toppers.map((topper) => Number(topper.percentage) || 0)).toFixed(0)}%` : '0%'} label={text.topScore} />
+          <SummaryItem icon="bi-trophy-fill" value={toppers.length ? `${Math.max(...toppers.map((topper) => Number(topper.percentage) || 0)).toFixed(2)}%` : '0%'} label={text.topScore} />
           <SummaryItem icon="bi-people-fill" value={toppers.length} label={text.listed} />
           <SummaryItem icon="bi-award-fill" value={toppers.filter((topper) => Number(topper.rank) <= 3).length} label={text.rankers} />
         </div>

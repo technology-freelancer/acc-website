@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { results as realResults } from '../data/animateData.js';
 
 const DEFAULT_API_URL = 'https://script.google.com/macros/s/AKfycbxILzEmehgUmXUHYdq6X44QEQbRjBiJ3e75Lf9TM7e1BusYXl6XNpgYnyO2CgpdSBRg3g/exec';
 const API_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || DEFAULT_API_URL;
 
 const fallbackByAction = {
-  getResults: [],
+  getResults: realResults,
   getWeeklyResults: [],
   getAlumni: [],
   getTestimonials: [],
@@ -16,13 +17,15 @@ const fallbackByAction = {
 const CACHE_PREFIX = 'coachingpro-sheet-cache:';
 
 export function getCachedSheetData(action) {
-  if (typeof window === 'undefined' || !window.localStorage) return [];
+  const fallback = fallbackByAction[action] || [];
+  if (action === 'getResults') return fallback;
+  if (typeof window === 'undefined' || !window.localStorage) return fallback;
 
   try {
     const cached = JSON.parse(window.localStorage.getItem(`${CACHE_PREFIX}${action}`) || 'null');
-    return Array.isArray(cached?.data) ? cached.data : [];
+    return Array.isArray(cached?.data) && cached.data.length ? cached.data : fallback;
   } catch (error) {
-    return [];
+    return fallback;
   }
 }
 
@@ -50,13 +53,19 @@ function cacheSheetData(action, data) {
 }
 
 const normalizeResponse = (response, action) => {
+  const fallback = fallbackByAction[action] || [];
   const payload = response?.data;
-  if (Array.isArray(payload)) return payload;
-  if (Array.isArray(payload?.data)) return payload.data;
-  return fallbackByAction[action] || [];
+  if (Array.isArray(payload)) return payload.length ? payload : fallback;
+  if (Array.isArray(payload?.data)) return payload.data.length ? payload.data : fallback;
+  return fallback;
 };
 
 export async function fetchSheetData(action) {
+  if (action === 'getResults') {
+    cacheSheetData(action, realResults);
+    return realResults;
+  }
+
   if (!API_URL) return fallbackByAction[action] || [];
 
   try {
